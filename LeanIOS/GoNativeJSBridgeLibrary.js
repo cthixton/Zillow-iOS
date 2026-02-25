@@ -138,6 +138,12 @@ median.webview = {
     },
     reload: function () {
         addCommand("median://webview/reload");
+    },
+    getZoom: function () {
+        return addCommandCallback("median://webview/getZoom");
+    },
+    setZoom: function (zoom) {
+        addCommand("median://webview/setZoom", { zoom });
     }
 };
 
@@ -379,6 +385,19 @@ function median_match_statusbar_to_body_background_color() {
     else{
         median.statusbar.set({'style': 'light', 'color': hex});
     }
+}
+
+function median_get_body_background_color() {
+    let rgb = window.getComputedStyle(document.body, null).getPropertyValue('background-color');
+    if (!rgb || rgb === 'transparent') return null;
+    let parts = rgb.match(/[\d.]+/g);
+    if (!parts || parts.length < 3) return null;
+    let a = parts.length === 4 ? parseFloat(parts[3]) : 1;
+    if (a === 0) return null;
+    let r = parseFloat(parts[0]) * a / 255;
+    let g = parseFloat(parts[1]) * a / 255;
+    let b = parseFloat(parts[2]) * a / 255;
+    return [r, g, b];
 }
 
 //////////////////////////////////////

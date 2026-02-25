@@ -25,10 +25,10 @@
     "androidUserAgentAdd": "median",
     "androidForceUserAgent": "",
     "androidSigningKey": "release",
-    "iosCustomHeaders": {},
-    "androidCustomHeaders": {},
     "injectMedianJS": true,
     "forceSessionCookieExpiry": 0,
+    "iosCustomHeaders": {},
+    "androidCustomHeaders": {},
     "version": 1
   },
   "navigation": {
@@ -50,6 +50,7 @@
       "menus": [
         {
           "active": false,
+          "name": "default",
           "items": [
             {
               "url": "https://zillow.com/",
@@ -106,72 +107,71 @@
               "label": "Help",
               "subLinks": []
             }
-          ],
-          "name": "default"
+          ]
         }
       ]
     },
     "regexInternalExternal": {
       "rules": [
         {
+          "regex": "^(?!https?://).*",
           "mode": "external",
           "label": "Non-web links",
-          "pagesToTrigger": "custom",
-          "regex": "^(?!https?://).*"
+          "pagesToTrigger": "custom"
         },
         {
+          "regex": "https?://([-\\w]+\\.)*facebook\\.com.*",
           "mode": "appbrowser",
           "label": "Facebook",
-          "pagesToTrigger": "custom",
-          "regex": "https?://([-\\w]+\\.)*facebook\\.com.*"
+          "pagesToTrigger": "custom"
         },
         {
+          "regex": "https?://([\\-\\w]+\\.)*(twitter|x)\\.com/.*",
           "mode": "appbrowser",
           "label": "Twitter/X",
-          "pagesToTrigger": "custom",
-          "regex": "https?://([\\-\\w]+\\.)*(twitter|x)\\.com/.*"
+          "pagesToTrigger": "custom"
         },
         {
+          "regex": "https?://([-\\w]+\\.)*instagram\\.com/.*",
           "mode": "appbrowser",
           "label": "Instagram",
-          "pagesToTrigger": "custom",
-          "regex": "https?://([-\\w]+\\.)*instagram\\.com/.*"
+          "pagesToTrigger": "custom"
         },
         {
+          "regex": "https?://maps\\.google\\.com.*",
           "mode": "appbrowser",
           "label": "Google Maps",
-          "pagesToTrigger": "custom",
-          "regex": "https?://maps\\.google\\.com.*"
+          "pagesToTrigger": "custom"
         },
         {
+          "regex": "https?://([-\\w]+\\.)*google\\.com/maps/search/.*",
           "mode": "appbrowser",
           "label": "Google Maps Search",
-          "pagesToTrigger": "custom",
-          "regex": "https?://([-\\w]+\\.)*google\\.com/maps/search/.*"
+          "pagesToTrigger": "custom"
         },
         {
+          "regex": "https?://([-\\w]+\\.)*linkedin\\.com/.*",
           "mode": "appbrowser",
           "label": "LinkedIn",
-          "pagesToTrigger": "custom",
-          "regex": "https?://([-\\w]+\\.)*linkedin\\.com/.*"
+          "pagesToTrigger": "custom"
         },
         {
+          "regex": "https?://login\\.microsoftonline\\.com.*",
           "mode": "internal",
           "label": "Microsoft Login",
-          "pagesToTrigger": "custom",
-          "regex": "https?://login\\.microsoftonline\\.com.*"
+          "pagesToTrigger": "custom"
         },
         {
+          "regex": "https?:\\/\\/([-\\w]+\\.)*zillow.com(\\/.*)?$",
           "mode": "internal",
           "label": "All pages on my domain",
-          "pagesToTrigger": "domain",
-          "regex": "https?:\\/\\/([-\\w]+\\.)*zillow.com(\\/.*)?$"
+          "pagesToTrigger": "domain"
         },
         {
+          "regex": ".*",
           "mode": "appbrowser",
           "label": "All Other Links",
-          "pagesToTrigger": "all",
-          "regex": ".*"
+          "pagesToTrigger": "all"
         }
       ],
       "active": true
@@ -179,8 +179,8 @@
     "androidPullToRefresh": false,
     "iosPullToRefresh": true,
     "navigationTitles": {
-      "titles": [],
-      "active": true
+      "active": true,
+      "titles": []
     },
     "ignorePageFinishedRegexes": [],
     "actionConfig": {
@@ -195,8 +195,8 @@
       "enableAndroidApplinks": false
     },
     "navigationLevels": {
-      "levels": [],
-      "active": true
+      "active": true,
+      "levels": []
     },
     "toolbarNavigation": {
       "enabled": false,
@@ -384,11 +384,18 @@
     "forceViewportWidth": null,
     "pinchToZoom": null,
     "iosDynamicType": null,
-    "navigationTitleImageLocation": "assets/defaults/app-icon-placeholder.png",
-    "navigationTitleImageLocationDark": "assets/defaults/app-icon-placeholder.png",
-    "androidHeaderImage": "assets/defaults/app-icon-placeholder.png",
-    "androidHeaderImageDark": "assets/defaults/app-icon-placeholder.png",
-    "iosHeaderImageDark": "https://s3.amazonaws.com/gonativeio/app_files/bryypd/app_icon_rz9gbm993a5fg_1749735707.png"
+    "navigationTitleImageLocation": "https://s3.amazonaws.com/gonativeio/app_files/bryypd/app_icon_rz9gbm993a5fg_1749735707.png",
+    "navigationTitleImageLocationDark": "https://s3.amazonaws.com/gonativeio/app_files/bryypd/app_icon_rz9gbm993a5fg_1749735707.png",
+    "androidHeaderImage": "https://s3.amazonaws.com/gonativeio/app_files/bryypd/app_icon_rz9gbm993a5fg_1749735707.png",
+    "androidHeaderImageDark": "https://s3.amazonaws.com/gonativeio/app_files/bryypd/app_icon_rz9gbm993a5fg_1749735707.png",
+    "iosHeaderImageDark": "https://s3.amazonaws.com/gonativeio/app_files/bryypd/app_icon_rz9gbm993a5fg_1749735707.png",
+    "androidHideNavBarOnScroll": false,
+    "androidHideTabBarOnScroll": false,
+    "iosGlassDesign": false,
+    "iosHideNavBarOnScroll": false,
+    "iosHideTabBarOnScroll": false,
+    "iosTransparentNavBar": true,
+    "initialZoom": null
   },
   "permissions": {
     "usesGeolocation": false,

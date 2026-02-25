@@ -10,7 +10,7 @@
 #import "LEANWebViewController.h"
 
 @interface LEANToolbarManager : NSObject
-- (instancetype)initWithToolbar:(UIToolbar*)toolbar webviewController:(LEANWebViewController*)wvc;
+- (instancetype)initWithToolbar:(UIToolbar*)toolbar heightConstraint:(NSLayoutConstraint *)heightConstraint wvc:(LEANWebViewController*)wvc;
 - (void)handleUrl:(NSURL *)url query:(NSDictionary*)query;
 - (void)didLoadUrl:(NSURL*)url;
 - (void)setToolbarEnabled:(BOOL)enabled;

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Bg2-kp-iGG">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24093.8" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Bg2-kp-iGG">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24053.1"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -30,7 +30,7 @@
             <objects>
                 <navigationController storyboardIdentifier="contentController" definesPresentationContext="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="9g4-9b-Jzi" customClass="LEANNavigationController" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="weu-Ph-Ic2">
-                        <rect key="frame" x="0.0" y="50" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="100" width="375" height="54"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -78,25 +78,25 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GBp-Vo-WtS" userLabel="WebviewContainer">
-                                <rect key="frame" x="0.0" y="94" width="375" height="591"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="651"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mys-1p-egd" userLabel="Plugin View">
-                                <rect key="frame" x="0.0" y="685" width="375" height="0.0"/>
+                                <rect key="frame" x="0.0" y="651" width="375" height="0.0"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" priority="100" id="3tp-P2-I24"/>
                                 </constraints>
                             </view>
                             <toolbar hidden="YES" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U7w-yv-4mp">
-                                <rect key="frame" x="0.0" y="685" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="651" width="375" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="jsG-72-JAt"/>
                                 </constraints>
                                 <items/>
                             </toolbar>
                             <tabBar hidden="YES" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d6i-vM-zFn">
-                                <rect key="frame" x="0.0" y="729" width="375" height="49"/>
+                                <rect key="frame" x="0.0" y="695" width="375" height="49"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="49" id="kt9-cF-e77"/>
@@ -118,7 +118,7 @@
                             <constraint firstItem="mys-1p-egd" firstAttribute="trailing" secondItem="v69-wv-2wg" secondAttribute="trailing" id="GNG-Yx-xH6"/>
                             <constraint firstItem="d6i-vM-zFn" firstAttribute="top" secondItem="U7w-yv-4mp" secondAttribute="bottom" id="LtD-ts-ptw"/>
                             <constraint firstItem="U7w-yv-4mp" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" priority="100" id="MeI-bm-A4R"/>
-                            <constraint firstItem="GBp-Vo-WtS" firstAttribute="top" secondItem="v69-wv-2wg" secondAttribute="top" id="NbD-9P-xqX"/>
+                            <constraint firstItem="GBp-Vo-WtS" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" id="NbD-9P-xqX"/>
                             <constraint firstItem="v69-wv-2wg" firstAttribute="right" secondItem="GBp-Vo-WtS" secondAttribute="right" id="SkF-oL-iej"/>
                             <constraint firstItem="d6i-vM-zFn" firstAttribute="trailing" secondItem="kh9-bI-dsS" secondAttribute="trailing" priority="100" id="UCK-34-wn8"/>
                             <constraint firstItem="d6i-vM-zFn" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" priority="100" id="W8O-BX-SCJ"/>
@@ -162,11 +162,13 @@
                         <outlet property="pluginViewTopWebviewBottomConstraint" destination="lv0-eV-4jw" id="qoB-Cn-cOT"/>
                         <outlet property="tabBar" destination="d6i-vM-zFn" id="KEs-Jo-xGg"/>
                         <outlet property="tabBarBottomConstraint" destination="kRQ-0d-WHK" id="WpI-F2-Bzs"/>
+                        <outlet property="tabbarHeightConstraint" destination="kt9-cF-e77" id="ADg-EB-yKg"/>
                         <outlet property="tabbarLeftSafeAreaLeft" destination="lJu-bT-CBi" id="cqc-NN-3iL"/>
                         <outlet property="tabbarRightSafeAreaRight" destination="XII-eu-6QS" id="hOP-1T-Vzp"/>
                         <outlet property="tabbarTopWebviewBottomConstraint" destination="9k8-Z1-cNF" id="E1Q-bz-n0X"/>
                         <outlet property="toolbar" destination="U7w-yv-4mp" id="Tqf-29-h2S"/>
                         <outlet property="toolbarBottomConstraint" destination="LtD-ts-ptw" id="1Bx-Yf-GMZ"/>
+                        <outlet property="toolbarHeightConstraint" destination="jsG-72-JAt" id="a8P-g5-7gy"/>
                         <outlet property="toolbarLeftSafeAreaLeft" destination="BNH-59-vhV" id="mme-fC-8hy"/>
                         <outlet property="toolbarRightSafeAreaRight" destination="Fp8-P1-Qn4" id="Su5-zV-w04"/>
                         <outlet property="toolbarTopWebviewBottomConstraint" destination="hdN-1h-CmV" id="BWt-mV-50V"/>

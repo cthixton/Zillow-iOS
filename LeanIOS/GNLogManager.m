@@ -52,6 +52,9 @@
     "    debug: function(...data) { "
     "       medianInterceptConsoleLogs('console.debug', ...data); "
     "    }, "
+    "    info: function(...data) { "
+    "       medianInterceptConsoleLogs('console.info', ...data); "
+    "    }, "
     " }; "
     " ";
     
