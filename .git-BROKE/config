@@ -1,0 +1,12 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+	ignorecase = true
+	precomposeunicode = true
+[http]
+	postBuffer = 524288000
+[remote "origin"]
+	url = https://github.com/cthixton/Zillow-iOS.git
+	fetch = +refs/heads/*:refs/remotes/origin/*

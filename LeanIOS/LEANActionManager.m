@@ -7,6 +7,7 @@
 //
 
 #import "LEANActionManager.h"
+#import "LEANUtilities.h"
 #import "GonativeIO-Swift.h"
 
 @implementation LEANActionButtons
@@ -193,7 +194,7 @@
 }
 
 - (CGFloat)sizeForIcon:(NSString *)iconName {
-    CGFloat size = 22;
+    CGFloat size = [LEANUtilities isGlassDesignEnabled] ? 18 : 20;
     if ([iconName hasPrefix:@"custom "]) {
         size = size * 1.05;
     } else if ([iconName hasPrefix:@"md "]) {

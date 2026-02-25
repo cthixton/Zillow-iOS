@@ -196,8 +196,7 @@
     if ([userActivity.activityType isEqualToString:NSUserActivityTypeBrowsingWeb]) {
         UIViewController *rvc = self.window.rootViewController;
         if ([rvc isKindOfClass:[LEANRootViewController class]] && userActivity.webpageURL) {
-            LEANRootViewController *vc = (LEANRootViewController*)rvc;
-            [vc loadUrl:userActivity.webpageURL];
+            [(LEANRootViewController *)rvc handleDeeplinkUrl:userActivity.webpageURL];
             return YES;
         }
     }

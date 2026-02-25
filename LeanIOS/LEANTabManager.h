@@ -10,7 +10,7 @@
 #import "LEANWebViewController.h"
 
 @interface LEANTabManager : NSObject
-- (instancetype)initWithTabBar:(UITabBar*)tabBar webviewController:(LEANWebViewController*)wvc;
+- (instancetype)initWithTabBar:(UITabBar*)tabBar heightConstraint:(NSLayoutConstraint *)heightConstraint wvc:(LEANWebViewController*)wvc;
 - (void)handleUrl:(NSURL *)url query:(NSDictionary*)query;
 - (void)didLoadUrl:(NSURL*)url;
 - (void)selectTabWithUrl:(NSString *)url;
@@ -20,5 +20,6 @@
 - (void)setTabsWithJson:(NSDictionary*)json;
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection;
 
-@property BOOL javascriptTabs; // disables auto-loading of tabs from config
+@property BOOL javascriptTabs;
+@property BOOL isShowingTabBar; // disables auto-loading of tabs from config
 @end

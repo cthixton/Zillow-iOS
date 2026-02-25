@@ -65,7 +65,9 @@
 @property IBOutlet NSLayoutConstraint *toolbarBottomConstraint;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *pluginViewTopWebviewBottomConstraint;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *toolbarTopWebviewBottomConstraint;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *toolbarHeightConstraint;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *tabbarTopWebviewBottomConstraint;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *tabbarHeightConstraint;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *webviewLeftSafeAreaLeft;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *webviewRightSafeAreaRight;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *toolbarLeftSafeAreaLeft;
@@ -100,9 +102,15 @@
 @property CGFloat savedScreenBrightness;
 @property BOOL restoreBrightnessOnNavigation;
 @property BOOL sidebarItemsEnabled;
+@property NSURL *deeplinkUrl;
 
 @property NSString *postLoadJavascript;
 @property NSString *postLoadJavascriptForRefresh;
+
+// Auto show/hide top navbar
+@property CGFloat previousScrollY;
+@property BOOL isShowingTopNavBar;
+@property NSTimeInterval nextScrollTime;
 
 @property (nonatomic, copy) void (^locationPermissionBlock)(void);
 
@@ -125,6 +133,7 @@
 @property LEANWindowsManager *windowsManager;
 @property LEANPDFManager *pdfManager;
 @property LEANLoadingSpinnerManager *loadingSpinnerManager;
+@property WebViewViewportManager *viewportManager;
 
 @property NSNumber* statusBarStyle; // set via native bridge, only works if no navigation bar
 @property IBOutlet NSLayoutConstraint *topGuideConstraint; // modify constant to place content under status bar
@@ -178,9 +187,10 @@ static NSInteger _currentWindows = 0;
     self.savedScreenBrightness = -1;
     self.restoreBrightnessOnNavigation = NO;
     self.sidebarItemsEnabled = YES;
+    self.previousScrollY = 0;
     
-    self.tabManager = [[LEANTabManager alloc] initWithTabBar:self.tabBar webviewController:self];
-    self.toolbarManager = [[LEANToolbarManager alloc] initWithToolbar:self.toolbar webviewController:self];
+    self.tabManager = [[LEANTabManager alloc] initWithTabBar:self.tabBar heightConstraint:self.tabbarHeightConstraint wvc:self];
+    self.toolbarManager = [[LEANToolbarManager alloc] initWithToolbar:self.toolbar heightConstraint:self.toolbarHeightConstraint wvc:self];
     self.JSBridgeInterface = [[GNJSBridgeInterface alloc] init];
     self.fileWriterSharer = [[GNFileWriterSharer alloc] init];
     self.fileWriterSharer.wvc = self;
@@ -275,6 +285,7 @@ static NSInteger _currentWindows = 0;
     self.registrationManager = [GNRegistrationManager sharedManager];
     self.pdfManager = [LEANPDFManager shared];
     self.loadingSpinnerManager = [[LEANLoadingSpinnerManager alloc] initWithVc:self];
+    self.viewportManager = [WebViewViewportManager shared];
     
     // we will always be loading a page at launch, hide webview here to fix a white flash for dark themed apps
     [self hideWebview];
@@ -296,6 +307,7 @@ static NSInteger _currentWindows = 0;
     NSString *mode = [[NSUserDefaults standardUserDefaults] objectForKey:@"darkMode"];
     [self setNativeTheme:mode ?: appConfig.iosDarkMode];
     [self updateStatusBarStyle:appConfig.iosStatusBarStyle];
+    [self updateStatusBarOverlay:appConfig.iosEnableOverlayInStatusBar];
     
     [((LEANAppDelegate *)[UIApplication sharedApplication].delegate).bridge runnerDidLoad:self];
 }
@@ -433,7 +445,7 @@ static NSInteger _currentWindows = 0;
         }
     } else if ([name isEqualToString:UIContentSizeCategoryDidChangeNotification]) {
         NSString *contentSizeCategory = notification.userInfo[UIContentSizeCategoryNewValueKey];
-        [self applyCssForContentSizeCategory:contentSizeCategory];
+        [LEANUtilities applyFontScalingForContentSize:contentSizeCategory toWebView:self.wkWebview asUserScript:NO];
     }
 }
 
@@ -658,18 +670,28 @@ static NSInteger _currentWindows = 0;
         // set the view
         self.defaultTitleView = self.navigationTitleImageView;
         self.navigationItem.titleView = self.navigationTitleImageView;
-        [self.navigationController setNavigationBarHidden:NO animated:YES];
+        self.isShowingTopNavBar = YES;
     } else {
         self.defaultTitleView = nil;
         self.navigationItem.titleView = nil;
+        self.isShowingTopNavBar = title != nil;
         
-        if (title) {
-            self.navigationItem.title = title;
-            [self.navigationController setNavigationBarHidden:NO animated:YES];
-        } else {
-            [self.navigationController setNavigationBarHidden:YES animated:YES];
+        if ([title isKindOfClass:[NSString class]] && title.length > 0) {
+            if (@available(iOS 26.0, *)) {
+                if ([LEANUtilities isGlassDesignEnabled]) {
+                    LEANLiquidTitleView *titleView = [LEANLiquidTitleView new];
+                    titleView.text = title;
+                    self.navigationItem.titleView = titleView;
+                } else {
+                    self.navigationItem.title = title;
+                }
+            } else {
+                self.navigationItem.title = title;
+            }
         }
     }
+    
+    [self.navigationController setNavigationBarHidden:!self.isShowingTopNavBar animated:YES];
 }
 
 - (void)hideTabBarAnimated:(BOOL)animated
@@ -740,27 +762,31 @@ static NSInteger _currentWindows = 0;
     }
 }
 
+- (void)applyStatusBarOverlay {
+    // Top guide is equal to super view (below top navbar)
+    if ([LEANUtilities isGlassDesignEnabled]) {
+        CGFloat statusBarHeight = [UIApplication sharedApplication].currentStatusBarFrame.size.height;
+        self.topGuideConstraint.constant = self.statusBarOverlay ? 0 : statusBarHeight;
+        
+        if (self.isShowingTopNavBar) {
+            CGFloat topInset = self.navigationController.navigationBar.frame.size.height;
+            if (self.statusBarOverlay) {
+                topInset += statusBarHeight;
+            }
+            self.wkWebview.scrollView.contentInset = UIEdgeInsetsMake(topInset, 0, 0, 0);
+        }
+    }
+    // Top guide is equal to safearea view (below top navbar)
+    else {
+        self.topGuideConstraint.constant = self.statusBarOverlay ? 0 : self.view.safeAreaInsets.top;
+    }
+}
+
 - (void)adjustInsets
 {
     // This function used to adjust the content inset of the webview's scrollview, but we
     // have moved away from that strategy. Now we just let autolayout constraints resize
     // the webview frame, and set masksToBounds=false
-}
-
-- (void)applyStatusBarOverlay
-{
-    if (self.statusBarOverlay) {
-        if (@available(iOS 11.0, *)) {
-            // need a larger offset than 20 for iPhone X
-            self.topGuideConstraint.constant = -self.view.safeAreaInsets.top;
-        } else {
-            self.topGuideConstraint.constant = -20.0;
-        }
-    } else {
-        // use the gap between safeArea and statusbar as constraint if top nav bar is hidden
-        float gap = self.view.safeAreaInsets.top - [UIApplication sharedApplication].currentStatusBarFrame.size.height;
-        self.topGuideConstraint.constant = gap < 20.0 ? -gap : 0;
-    }
 }
 
 - (IBAction) buttonPressed:(id)sender
@@ -1350,6 +1376,12 @@ static NSInteger _currentWindows = 0;
         return;
     }
     
+    if ([@"text/vcard" isEqualToString:navigationResponse.response.MIMEType]) {
+        [self.documentSharer shareUrl:navigationResponse.response.URL fromView:self.wkWebview];
+        decisionHandler(WKNavigationResponsePolicyCancel);
+        return;
+    }
+    
     if (@available(iOS 15.0, *)) {
         decisionHandler(WKNavigationResponsePolicyDownload);
         return;
@@ -1451,11 +1483,17 @@ static NSInteger _currentWindows = 0;
         return YES;
     }
     
+    // show share dialog for base64 urls
+    if ([url.scheme isEqualToString:@"data"]) {
+        return YES;
+    }
+    
     // blob download
     if (urlString.length == 0) {
         // for some reason we will get an empty url before the actual blob url on iOS 11
         return NO;
     }
+    
     // Only start blob downloads on the main frame
     if ([url.scheme isEqualToString:@"blob"] && isMainFrame) {
         [self.fileWriterSharer downloadBlobUrl:url filename:nil callback:nil];
@@ -1837,6 +1875,7 @@ static NSInteger _currentWindows = 0;
         self.wkWebview = (WKWebView*)newView;
         self.wkWebview.navigationDelegate = self;
         self.wkWebview.UIDelegate = self;
+        self.wkWebview.scrollView.delegate = self;
         scrollView = self.wkWebview.scrollView;
         
         // add KVO for single-page app url changes
@@ -1956,6 +1995,8 @@ static NSInteger _currentWindows = 0;
         
         // stop watching location
         [self.locationManager stopUpdatingLocation];
+        
+        [self updateViewBackgroundColor];
     });
 }
 
@@ -2111,12 +2152,28 @@ static NSInteger _currentWindows = 0;
         NSString *mode = [[NSUserDefaults standardUserDefaults] objectForKey:@"darkMode"];
         [self setCssTheme:mode ?: appConfig.iosDarkMode andPersistData:NO];
         
-        // Accessibility & Dynamic Type Support
-        UIContentSizeCategory contentSizeCategory = [UIApplication sharedApplication].preferredContentSizeCategory;
-        [self applyCssForContentSizeCategory:contentSizeCategory];
+        [self updateViewBackgroundColor];
         
         [self runJavascriptWithCallback:@[@"median_library_ready", @"gonative_library_ready"] data:nil];
+        
+        // Load deeplink
+        if (self.deeplinkUrl) {
+            [self loadUrl:self.deeplinkUrl];
+            self.deeplinkUrl = nil;
+        }
     });
+}
+
+- (void)handleDeeplinkUrl:(NSURL *)url {
+    if (!url) {
+        return;
+    }
+    
+    if (self.didLoadPage) {
+        [self loadUrl:url];
+    } else {
+        self.deeplinkUrl = url;
+    }
 }
 
 -(void)runGonativeDeviceInfoWithCallback:(NSString*)callback {
@@ -2585,17 +2642,32 @@ static NSInteger _currentWindows = 0;
 
 #pragma mark - Scroll View Delegate
 
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
-{
-    if (scrollView.contentOffset.y > 0) {
-        [self.navigationController setNavigationBarHidden:YES animated:YES];
-        [self.navigationController setToolbarHidden:YES animated:YES];
-        [scrollView setContentInset:UIEdgeInsetsMake(0, 0, 0, 0)];
-        
-    } else {
-        [self.navigationController setNavigationBarHidden:NO animated:YES];
-        [self.navigationController setToolbarHidden:NO animated:YES];
-        [scrollView setContentInset:UIEdgeInsetsMake(64, 0, 44, 0)];
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    BOOL isScrollable = scrollView.contentSize.height > scrollView.bounds.size.height;
+    BOOL isScrolling = scrollView.isTracking && scrollView.isDragging && isScrollable;
+    
+    CGFloat currentScrollY = scrollView.contentOffset.y;
+    CGFloat previousScrollY = self.previousScrollY;
+    self.previousScrollY = currentScrollY;
+    
+    if (!isScrolling || CACurrentMediaTime() < self.nextScrollTime) {
+        return;
+    }
+    self.nextScrollTime = CACurrentMediaTime() + 0.3; // After running animation
+    
+    GoNativeAppConfig *appConfig = [GoNativeAppConfig sharedAppConfig];
+    BOOL showNavBar = currentScrollY <= 0 || currentScrollY <= previousScrollY;
+    
+    if (self.isShowingTopNavBar && appConfig.hideNavBarOnScroll) {
+        [self.navigationController setNavigationBarHidden:!showNavBar animated:YES];
+    }
+    
+    if (self.tabManager.isShowingTabBar && appConfig.hideTabBarOnScroll) {
+        if (showNavBar) {
+            [self showTabBarAnimated:YES];
+        } else {
+            [self hideTabBarAnimated:YES];
+        }
     }
 }
 
@@ -2679,31 +2751,25 @@ static NSInteger _currentWindows = 0;
     [self.tabBar invalidateIntrinsicContentSize];
     [self.toolbar invalidateIntrinsicContentSize];
     
-    
     GoNativeAppConfig *appConfig = [GoNativeAppConfig sharedAppConfig];
+    UIColor *backgroundColor = [UIColor whiteColor];
     
     // theme and colors
     if ([appConfig.iosTheme isEqualToString:@"dark"]) {
-        self.view.backgroundColor = [UIColor blackColor];
-        self.webviewContainer.backgroundColor = [UIColor blackColor];
         self.tabBar.barStyle = UIBarStyleBlack;
         self.toolbar.barStyle = UIBarStyleBlack;
+        backgroundColor = [UIColor blackColor];
     } else {
         self.tabBar.barStyle = UIBarStyleDefault;
         self.toolbar.barStyle = UIBarStyleDefault;
-        
-        if (@available(iOS 12.0, *)) {
-            if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
-                self.view.backgroundColor = [UIColor blackColor];
-                self.webviewContainer.backgroundColor = [UIColor blackColor];
-            } else {
-                self.view.backgroundColor = [UIColor whiteColor];
-                self.webviewContainer.backgroundColor = [UIColor whiteColor];
-            }
-        } else {
-            self.view.backgroundColor = [UIColor whiteColor];
-            self.webviewContainer.backgroundColor = [UIColor whiteColor];
+        if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            backgroundColor = [UIColor blackColor];
         }
+    }
+    
+    if (![LEANUtilities isGlassDesignEnabled]) {
+        self.view.backgroundColor = backgroundColor;
+        self.webviewContainer.backgroundColor = backgroundColor;
     }
     
     [self applyStatusBarOverlay];
@@ -2825,35 +2891,12 @@ static NSInteger _currentWindows = 0;
     }
 }
 
-- (void)applyCssForContentSizeCategory:(NSString *)contentSizeCategory {
-    if (![GoNativeAppConfig sharedAppConfig].dynamicTypeEnabled) {
-        return;
-    }
-    
-    NSDictionary *fontScale = @{
-        UIContentSizeCategoryExtraSmall: @90,
-        UIContentSizeCategorySmall: @95,
-        UIContentSizeCategoryMedium: @100,
-        UIContentSizeCategoryLarge: @108,
-        UIContentSizeCategoryExtraLarge: @116,
-        UIContentSizeCategoryExtraExtraLarge: @124,
-        UIContentSizeCategoryExtraExtraExtraLarge: @132,
-        UIContentSizeCategoryAccessibilityMedium: @170,
-        UIContentSizeCategoryAccessibilityLarge: @190,
-        UIContentSizeCategoryAccessibilityExtraLarge: @210,
-        UIContentSizeCategoryAccessibilityExtraExtraLarge: @230,
-        UIContentSizeCategoryAccessibilityExtraExtraExtraLarge: @250,
-    };
-    
-    if (fontScale[contentSizeCategory]) {
-        NSString *createStyleJs = @" "
-        "   var style = document.createElement('style'); "
-        "   style.innerHTML = 'body { -webkit-text-size-adjust: %@%%; }'; "
-        "   document.head.appendChild(style); "
-        " ";
-        
-        NSString *javascript = [NSString stringWithFormat:createStyleJs, fontScale[contentSizeCategory]];
-        [self.wkWebview evaluateJavaScript:javascript completionHandler:nil];
+- (void)updateViewBackgroundColor {
+    if ([LEANUtilities isGlassDesignEnabled]) {
+        [LEANUtilities getBodyBackgroundColor:self.wkWebview completion:^(UIColor *color) {
+            self.view.backgroundColor = color;
+            self.webviewContainer.backgroundColor = color;
+        }];
     }
 }
 

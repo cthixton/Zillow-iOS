@@ -15,23 +15,26 @@
 @property NSArray *menu;
 @property (weak, nonatomic) LEANWebViewController* wvc;
 @property NSString *currentMenuID;
-@property BOOL showTabBar;
 @property NSMutableDictionary<NSObject*, NSArray<NSPredicate*>*> *tabRegexCache;
 @end
 
 @implementation LEANTabManager
 
-- (instancetype)initWithTabBar:(UITabBar*)tabBar webviewController:(LEANWebViewController*)wvc;
-{
+- (instancetype)initWithTabBar:(UITabBar*)tabBar heightConstraint:(NSLayoutConstraint *)heightConstraint wvc:(LEANWebViewController*)wvc {
     self = [super init];
     if (self) {
         self.tabBar = tabBar;
         self.tabBar.delegate = self;
-        self.tabBar.unselectedItemTintColor = [UIColor colorNamed:@"inactiveTabBarItemColor"];
         self.wvc = wvc;
-        self.showTabBar = NO;
+        self.isShowingTabBar = NO;
         self.javascriptTabs = NO;
         self.tabRegexCache = [NSMutableDictionary dictionary];
+        
+        if ([LEANUtilities isGlassDesignEnabled]) {
+            heightConstraint.active = NO;
+        } else {
+            self.tabBar.unselectedItemTintColor = [UIColor colorNamed:@"inactiveTabBarItemColor"];
+        }
     }
     return self;
 }
@@ -59,7 +62,7 @@
     }
     
     if (showTabBar) {
-        if (!self.showTabBar) {
+        if (!self.isShowingTabBar) {
             // select first item
             if ([self.tabBar.items count] > 0 && !self.tabBar.selectedItem) {
                 self.tabBar.selectedItem = self.tabBar.items[0];
@@ -70,7 +73,7 @@
         [self.wvc hideTabBarAnimated:YES];
     }
     
-    self.showTabBar = showTabBar;
+    self.isShowingTabBar = showTabBar;
     
     [self autoSelectTabForUrl:url];
 }
@@ -100,7 +103,7 @@
 }
 
 - (CGFloat)sizeForIcon:(NSString *)iconName {
-    CGFloat size = 20;
+    CGFloat size = [LEANUtilities isGlassDesignEnabled] ? 20 : 24;
     if ([iconName hasPrefix:@"custom "]) {
         size = size * 1.1;
     } else if ([iconName hasPrefix:@"md "]) {
@@ -111,6 +114,7 @@
 
 - (UITabBarItem *)createOrUpdateTabBarItem:(UITabBarItem *)tabBarItem withTitle:(NSString *)title activeIcon:(NSString *)activeIcon inactiveIcon:(NSString *)inactiveIcon tag:(NSInteger)tag {
     UITabBarItem *item = tabBarItem;
+    
     if (!item) {
         if (!inactiveIcon) {
             inactiveIcon = activeIcon;
@@ -287,9 +291,9 @@
     if (![showTabBar isKindOfClass:[NSNumber class]]) {
        return;
     }
-    self.showTabBar = [showTabBar boolValue];
+    self.isShowingTabBar = [showTabBar boolValue];
 
-    if (self.showTabBar) {
+    if (self.isShowingTabBar) {
        NSArray *menu = json[@"items"];
        if ([menu isKindOfClass:[NSArray class]]) {
            [self setTabBarItems:menu];

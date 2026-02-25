@@ -120,6 +120,16 @@
     }
 }
 
+- (void)handleDeeplinkUrl:(NSURL *)url {
+    UINavigationController *nav = (UINavigationController*)self.contentViewController;
+    for (UIViewController *vc in nav.viewControllers) {
+        if ([vc isKindOfClass:[LEANWebViewController class]]) {
+            [(LEANWebViewController*)vc handleDeeplinkUrl:url];
+            break;
+        }
+    }
+}
+
 - (BOOL)webviewOnTop
 {
     return [((UINavigationController*)self.contentViewController).topViewController isKindOfClass:[LEANWebViewController class]];

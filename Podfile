@@ -1,5 +1,5 @@
 # Uncomment the next line to define a global platform for your project
-platform :ios, '13.0'
+platform :ios, '15.5'
 
 source 'https://cdn.cocoapods.org/'
 source 'git@github.com:gonativeio/gonative-specs.git'
@@ -13,7 +13,7 @@ target default_app_target do
   # Pods for GonativeIO
   pod 'GoNativeCore'
   pod 'MedianIcons'
-  pod 'SSZipArchive'
+  pod 'SSZipArchive', '~> 2.6.0'
   
   use_plugins!
 

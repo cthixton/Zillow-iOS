@@ -31,19 +31,23 @@
 
 @implementation LEANToolbarManager
 
-- (instancetype)initWithToolbar:(UIToolbar*)toolbar webviewController:(LEANWebViewController*)wvc
-{
+- (instancetype)initWithToolbar:(UIToolbar*)toolbar heightConstraint:(NSLayoutConstraint *)heightConstraint wvc:(LEANWebViewController*)wvc {
     self = [super init];
     if (self) {
         self.toolbar = toolbar;
+        
+        if ([LEANUtilities isGlassDesignEnabled]) {
+            heightConstraint.constant = 60;
+        }
+        
         self.wvc = wvc;
         [self processConfig];
+
     }
     return self;
 }
 
-- (void)processConfig
-{
+- (void)processConfig {
     NSMutableArray *toolbarItems = [NSMutableArray array];
     
     // initialize buttons
@@ -54,6 +58,7 @@
     self.backButton.item = [self createButtonWithTitle:@"Back" forButton:@"Back" andIcon:@"fas fa-chevron-left"];
     self.refreshButton.item = [self createButtonWithTitle:nil forButton:@"Refresh" andIcon:@"fas fa-redo-alt"];
     self.forwardButton.item = [self createButtonWithTitle:@"Forward" forButton:@"Forward" andIcon:@"fas fa-chevron-right"];
+    
     self.backButton.enabled = NO;
     self.refreshButton.enabled = NO;
     self.forwardButton.enabled = NO;
@@ -92,7 +97,6 @@
         }
     }
     
-    // create toolbar
     UIBarButtonItem *space = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     toolbarItems = [NSMutableArray arrayWithObjects:self.backButton.item, space, self.refreshButton.item, space, self.forwardButton.item, nil];
     
@@ -100,26 +104,31 @@
 }
 
 - (UIBarButtonItem *)createButtonWithTitle:(NSString *)title forButton:(NSString *)buttonType andIcon:(NSString *)icon {
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
+    CGFloat imageSize = [LEANUtilities isGlassDesignEnabled] ? 20 : 24;
+    UIImage *image = [LEANIcons imageForIconIdentifier:icon size:imageSize color:[UIColor colorNamed:@"tintColor"]];
     
-    // title
-    if(title) {
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
+    [button setImage:image forState:UIControlStateNormal];
+    
+    SEL action = @selector(refreshPressed:);
+    if ([buttonType isEqualToString:@"Back"]) {
+        action = @selector(backPressed:);
+    } else if ([buttonType isEqualToString:@"Forward"]) {
+        action = @selector(forwardPressed:);
+        [button setSemanticContentAttribute:UISemanticContentAttributeForceRightToLeft];
+    }
+    
+    [button addTarget:self action:action forControlEvents:UIControlEventTouchUpInside];
+    
+    if ([LEANUtilities isGlassDesignEnabled]) {
+        UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStylePlain target:self action:action];
+        return item;
+    }
+    
+    if (title) {
         [button setTitle:title forState:UIControlStateNormal];
         [[button titleLabel] setFont:[UIFont systemFontOfSize:18]];
         [button setTitleColor:[UIColor colorNamed:@"tintColor"] forState:UIControlStateNormal];
-    }
-    
-    // image
-    [button setImage:[LEANIcons imageForIconIdentifier:icon size:24 color:[UIColor colorNamed:@"tintColor"]] forState:UIControlStateNormal];
-    
-    // action
-    if ([buttonType isEqualToString:@"Back"]) {
-        [button addTarget:self action:@selector(backPressed:) forControlEvents:UIControlEventTouchUpInside];
-    } else if ([buttonType isEqualToString:@"Forward"]) {
-        [button setSemanticContentAttribute:UISemanticContentAttributeForceRightToLeft];
-        [button addTarget:self action:@selector(forwardPressed:) forControlEvents:UIControlEventTouchUpInside];
-    } else {
-        [button addTarget:self action:@selector(refreshPressed:) forControlEvents:UIControlEventTouchUpInside];
     }
     
     button.alpha = 0;
@@ -246,7 +255,7 @@
 - (BOOL)tryToShowBackButton:(NSURL *)url {
     if (![self canGoBack]) return NO;
     
-    if ([self.urlMimeType isEqualToString:@"application/pdf"] || [self.urlMimeType hasPrefix:@"image/"]) {
+    if ([self.urlMimeType hasPrefix:@"image/"]) {
         [self setToolbarItem:self.backButton enabled:YES];
         return YES;
     }
