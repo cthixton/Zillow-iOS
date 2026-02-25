@@ -9,7 +9,6 @@
 #import "LEANNavigationController.h"
 #import "LEANWebViewController.h"
 #import "LEANRootViewController.h"
-#import "LEANUtilities.h"
 
 @interface LEANNavigationController () <UINavigationControllerDelegate>
 @end
@@ -60,14 +59,14 @@
             self.view.backgroundColor = [UIColor whiteColor];
         }
     }
-    
+
     UIColor *titleColor = [UIColor colorNamed:@"titleColor"];
     UIColor *navBarTintColor = [UIColor colorNamed:@"navigationBarTintColor"];
     NSDictionary *titleTextAttributes = @{NSForegroundColorAttributeName: titleColor};
     self.navigationBar.titleTextAttributes = titleTextAttributes;
     self.navigationBar.barTintColor = navBarTintColor;
-
-    if (![LEANUtilities isGlassDesignEnabled] || !appConfig.transparentNavBar) {
+    
+    if (@available(iOS 13.0, *)) {
         UINavigationBarAppearance *appearance = [[UINavigationBarAppearance alloc] init];
         [appearance configureWithOpaqueBackground];
         [appearance setBackgroundColor:navBarTintColor];

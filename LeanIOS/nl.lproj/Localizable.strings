@@ -9,12 +9,3 @@
 
 /* iOS Button: Menu */
 "button-menu" = "Menu";
-
-/* Button: Copy Link */
-"button-copy-link" = "Kopieer linkadres";
-
-/* Button: Open External */
-"button-open-external" = "Open link in externe browser";
-
-/* Button: Share External */
-"button-share-link" = "Deel link";

@@ -30,6 +30,7 @@
 		2002B4FA18A99C4100495B3D /* LEANNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2002B4F318A99C4100495B3D /* LEANNavigationController.m */; };
 		2002B4FB18A99C4100495B3D /* LEANRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2002B4F518A99C4100495B3D /* LEANRootViewController.m */; };
 		2002B4FC18A99C4100495B3D /* LEANUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 2002B4F718A99C4100495B3D /* LEANUtilities.m */; };
+		2002B51318AB093900495B3D /* jquery-2.1.0.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 2002B51118AB091C00495B3D /* jquery-2.1.0.min.js */; };
 		2004820518B080DD005FDD9A /* SidebarHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2004820418B080DD005FDD9A /* SidebarHeaderView.xib */; };
 		2004AF7B18F8F936001E01E9 /* LEANWebViewIntercept.m in Sources */ = {isa = PBXBuildFile; fileRef = 2004AF7A18F8F936001E01E9 /* LEANWebViewIntercept.m */; };
 		2018EE951907671A00EC4311 /* LEANUrlInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = 2018EE941907671A00EC4311 /* LEANUrlInspector.m */; };
@@ -83,10 +84,8 @@
 		20FC7FB5199D1C7800A70B08 /* LEANTabManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 20FC7FB4199D1C7800A70B08 /* LEANTabManager.m */; };
 		37011C962BC40AAE00775CA0 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 37011C952BC40AAE00775CA0 /* PrivacyInfo.xcprivacy */; };
 		374399B62C2229E300B2F92D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 374399B42C2229E300B2F92D /* InfoPlist.strings */; };
-		375F612C2F18119A00385AD8 /* LiquidTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375F612B2F18119A00385AD8 /* LiquidTitleView.swift */; };
 		379E3D432A2147C4001C8A01 /* GNSwiftUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379E3D422A2147C4001C8A01 /* GNSwiftUtilities.swift */; };
 		3909A5A92C1C99E7001F68C3 /* MedianEventsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3909A5A82C1C99E7001F68C3 /* MedianEventsManager.m */; };
-		391C84AE2F2475D1006B25BA /* WebViewViewportManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391C84AD2F2475D1006B25BA /* WebViewViewportManager.swift */; };
 		3946F0282BD0DE7100E74ED5 /* ContextMenuHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3946F0272BD0DE7100E74ED5 /* ContextMenuHandler.swift */; };
 		395C15702B75D19D00E2985D /* LEANWindowsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 395C156F2B75D19D00E2985D /* LEANWindowsManager.m */; };
 		396F42242A970DF9003FD87E /* UIApplication+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396F42232A970DF9003FD87E /* UIApplication+Extensions.swift */; };
@@ -98,6 +97,7 @@
 		39DE1B492935E67F0001E926 /* GNLogManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 39DE1B482935E67F0001E926 /* GNLogManager.m */; };
 		39DE1E4D2C82015900E96CFE /* LEANLoadingSpinnerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 39DE1E4C2C82015900E96CFE /* LEANLoadingSpinnerManager.m */; };
 		93DA21EB31AE6F56B651894C /* Pods_MedianIOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B6D83597DFB31F85DB20AAC /* Pods_MedianIOSTests.framework */; };
+		A5F0DEF65B54C65774E33E36 /* Pods_Zillow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD63ADD8BAE1B59925424354 /* Pods_Zillow.framework */; };
 		BB3C460E26A9C1F9007D03DA /* GoNativeJSBridgeLibrary.js in Resources */ = {isa = PBXBuildFile; fileRef = BB3C460D26A9C1F9007D03DA /* GoNativeJSBridgeLibrary.js */; };
 		BB6E68A9273C731E004846A3 /* GNJSBridgeInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = BB6E68A8273C731E004846A3 /* GNJSBridgeInterface.m */; };
 		BB9A3B012631D2A7002C38F1 /* LEANIcons.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB9A3B002631D2A7002C38F1 /* LEANIcons.swift */; };
@@ -106,7 +106,6 @@
 		BBED1D612A4CBEB000180EBF /* customJS.js in Resources */ = {isa = PBXBuildFile; fileRef = BBED1D602A4CBEB000180EBF /* customJS.js */; };
 		BBED1D632A4CBEC900180EBF /* iosCustomCSS.css in Resources */ = {isa = PBXBuildFile; fileRef = BBED1D622A4CBEC900180EBF /* iosCustomCSS.css */; };
 		BBED1D652A4CBED900180EBF /* iosCustomJS.js in Resources */ = {isa = PBXBuildFile; fileRef = BBED1D642A4CBED900180EBF /* iosCustomJS.js */; };
-		ED491F84871C37486BF97FB7 /* Pods_Zillow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BF2998C2D700540C71826F9 /* Pods_Zillow.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -134,6 +133,7 @@
 
 /* Begin PBXFileReference section */
 		0B6D83597DFB31F85DB20AAC /* Pods_MedianIOSTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MedianIOSTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1C87D0EC71506DE657506B9C /* Pods-Zillow.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Zillow.release.xcconfig"; path = "Target Support Files/Pods-Zillow/Pods-Zillow.release.xcconfig"; sourceTree = "<group>"; };
 		2002B49818A9991300495B3D /* Zillow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Zillow.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2002B49B18A9991300495B3D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		2002B49D18A9991300495B3D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -172,6 +172,7 @@
 		2002B4F518A99C4100495B3D /* LEANRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LEANRootViewController.m; sourceTree = "<group>"; };
 		2002B4F618A99C4100495B3D /* LEANUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LEANUtilities.h; sourceTree = "<group>"; };
 		2002B4F718A99C4100495B3D /* LEANUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LEANUtilities.m; sourceTree = "<group>"; };
+		2002B51118AB091C00495B3D /* jquery-2.1.0.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "jquery-2.1.0.min.js"; sourceTree = "<group>"; };
 		2004820418B080DD005FDD9A /* SidebarHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SidebarHeaderView.xib; sourceTree = "<group>"; };
 		2004AF7918F8F936001E01E9 /* LEANWebViewIntercept.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LEANWebViewIntercept.h; sourceTree = "<group>"; };
 		2004AF7A18F8F936001E01E9 /* LEANWebViewIntercept.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LEANWebViewIntercept.m; sourceTree = "<group>"; };
@@ -249,11 +250,9 @@
 		20FC7FB4199D1C7800A70B08 /* LEANTabManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LEANTabManager.m; sourceTree = "<group>"; };
 		37011C952BC40AAE00775CA0 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		374399B52C2229E300B2F92D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		375F612B2F18119A00385AD8 /* LiquidTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiquidTitleView.swift; sourceTree = "<group>"; };
 		379E3D422A2147C4001C8A01 /* GNSwiftUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GNSwiftUtilities.swift; sourceTree = "<group>"; };
 		3909A5A82C1C99E7001F68C3 /* MedianEventsManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MedianEventsManager.m; sourceTree = "<group>"; };
 		3909A5AA2C1C99EE001F68C3 /* MedianEventsManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MedianEventsManager.h; sourceTree = "<group>"; };
-		391C84AD2F2475D1006B25BA /* WebViewViewportManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewViewportManager.swift; sourceTree = "<group>"; };
 		3946F0272BD0DE7100E74ED5 /* ContextMenuHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextMenuHandler.swift; sourceTree = "<group>"; };
 		395C156F2B75D19D00E2985D /* LEANWindowsManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LEANWindowsManager.m; sourceTree = "<group>"; };
 		395C15712B75D1A900E2985D /* LEANWindowsManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LEANWindowsManager.h; sourceTree = "<group>"; };
@@ -273,11 +272,9 @@
 		39DE1E4B2C82014300E96CFE /* LEANLoadingSpinnerManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LEANLoadingSpinnerManager.h; sourceTree = "<group>"; };
 		39DE1E4C2C82015900E96CFE /* LEANLoadingSpinnerManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LEANLoadingSpinnerManager.m; sourceTree = "<group>"; };
 		4C74E9233A1532B38445C85A /* Pods-MedianIOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MedianIOSTests.debug.xcconfig"; path = "Target Support Files/Pods-MedianIOSTests/Pods-MedianIOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		6DFFE53B32930FC50D5E3856 /* Pods-Zillow.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Zillow.debug.xcconfig"; path = "Target Support Files/Pods-Zillow/Pods-Zillow.debug.xcconfig"; sourceTree = "<group>"; };
 		74686CE5E5C79A441C3D2C20 /* Pods-Median.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Median.debug.xcconfig"; path = "Target Support Files/Pods-Median/Pods-Median.debug.xcconfig"; sourceTree = "<group>"; };
-		775032973D230A624AF99D7B /* Pods-Zillow.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Zillow.release.xcconfig"; path = "Target Support Files/Pods-Zillow/Pods-Zillow.release.xcconfig"; sourceTree = "<group>"; };
-		9BF2998C2D700540C71826F9 /* Pods_Zillow.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Zillow.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A790DA6927FDBA77A0DE081F /* Pods-MedianIOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MedianIOSTests.release.xcconfig"; path = "Target Support Files/Pods-MedianIOSTests/Pods-MedianIOSTests.release.xcconfig"; sourceTree = "<group>"; };
-		AC6FABD83EE396EE94BF6614 /* Pods-Zillow.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Zillow.debug.xcconfig"; path = "Target Support Files/Pods-Zillow/Pods-Zillow.debug.xcconfig"; sourceTree = "<group>"; };
 		BB182FAF2683478900DC8EAA /* LEANDlogDefinition.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LEANDlogDefinition.h; sourceTree = "<group>"; };
 		BB3C460D26A9C1F9007D03DA /* GoNativeJSBridgeLibrary.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = GoNativeJSBridgeLibrary.js; sourceTree = "<group>"; };
 		BB6E68A7273C7308004846A3 /* GNJSBridgeInterface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GNJSBridgeInterface.h; sourceTree = "<group>"; };
@@ -288,6 +285,7 @@
 		BBED1D602A4CBEB000180EBF /* customJS.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = customJS.js; sourceTree = "<group>"; };
 		BBED1D622A4CBEC900180EBF /* iosCustomCSS.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = iosCustomCSS.css; sourceTree = "<group>"; };
 		BBED1D642A4CBED900180EBF /* iosCustomJS.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = iosCustomJS.js; sourceTree = "<group>"; };
+		BD63ADD8BAE1B59925424354 /* Pods_Zillow.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Zillow.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9BBED51E055455D5C4808AF /* Pods-Median.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Median.release.xcconfig"; path = "Target Support Files/Pods-Median/Pods-Median.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -310,7 +308,7 @@
 				2002B49E18A9991300495B3D /* CoreGraphics.framework in Frameworks */,
 				2002B4A018A9991300495B3D /* UIKit.framework in Frameworks */,
 				2002B49C18A9991300495B3D /* Foundation.framework in Frameworks */,
-				ED491F84871C37486BF97FB7 /* Pods_Zillow.framework in Frameworks */,
+				A5F0DEF65B54C65774E33E36 /* Pods_Zillow.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -367,7 +365,7 @@
 				2002B49D18A9991300495B3D /* CoreGraphics.framework */,
 				2002B49F18A9991300495B3D /* UIKit.framework */,
 				0B6D83597DFB31F85DB20AAC /* Pods_MedianIOSTests.framework */,
-				9BF2998C2D700540C71826F9 /* Pods_Zillow.framework */,
+				BD63ADD8BAE1B59925424354 /* Pods_Zillow.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -375,7 +373,6 @@
 		2002B4A118A9991300495B3D /* LeanIOS */ = {
 			isa = PBXGroup;
 			children = (
-				375F612B2F18119A00385AD8 /* LiquidTitleView.swift */,
 				20B927A928C4EFE9004D4C15 /* custom-icons.ttf */,
 				203E19DC26DE45C3006F0E6C /* Project.entitlements */,
 				20C23645193E32EA00F6ADF0 /* Config */,
@@ -392,10 +389,10 @@
 				374399B42C2229E300B2F92D /* InfoPlist.strings */,
 				20A525ED1A7D94EE00936DC5 /* Settings.bundle */,
 				209A964423BAC508001906F1 /* appbeep.wav */,
+				2002B51118AB091C00495B3D /* jquery-2.1.0.min.js */,
 				397F6C072AC147B000BD0474 /* LEANHeaders.h */,
 				3946F0272BD0DE7100E74ED5 /* ContextMenuHandler.swift */,
 				3972F5322D59C143009B5279 /* CustomMenu.swift */,
-				391C84AD2F2475D1006B25BA /* WebViewViewportManager.swift */,
 				3909A5AA2C1C99EE001F68C3 /* MedianEventsManager.h */,
 				3909A5A82C1C99E7001F68C3 /* MedianEventsManager.m */,
 				209A964123BABF2D001906F1 /* GNBackgroundAudio.h */,
@@ -563,8 +560,8 @@
 				F9BBED51E055455D5C4808AF /* Pods-Median.release.xcconfig */,
 				4C74E9233A1532B38445C85A /* Pods-MedianIOSTests.debug.xcconfig */,
 				A790DA6927FDBA77A0DE081F /* Pods-MedianIOSTests.release.xcconfig */,
-				AC6FABD83EE396EE94BF6614 /* Pods-Zillow.debug.xcconfig */,
-				775032973D230A624AF99D7B /* Pods-Zillow.release.xcconfig */,
+				6DFFE53B32930FC50D5E3856 /* Pods-Zillow.debug.xcconfig */,
+				1C87D0EC71506DE657506B9C /* Pods-Zillow.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -692,6 +689,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				20B927AA28C4F03E004D4C15 /* custom-icons.ttf in Resources */,
+				2002B51318AB093900495B3D /* jquery-2.1.0.min.js in Resources */,
 				20A13ABC1905FAA600B997DD /* MenuChildNoIcon.xib in Resources */,
 				BB3C460E26A9C1F9007D03DA /* GoNativeJSBridgeLibrary.js in Resources */,
 				20580E031B2E53730061943C /* offline.html in Resources */,
@@ -852,7 +850,6 @@
 				20B6B55519AC4C2E004019C4 /* LEANDocumentSharer.m in Sources */,
 				20A7FF05197F6DDE006FDF44 /* LEANConfigUpdater.m in Sources */,
 				209A964323BABF2D001906F1 /* GNBackgroundAudio.m in Sources */,
-				375F612C2F18119A00385AD8 /* LiquidTitleView.swift in Sources */,
 				BB6E68A9273C731E004846A3 /* GNJSBridgeInterface.m in Sources */,
 				2002B4FB18A99C4100495B3D /* LEANRootViewController.m in Sources */,
 				2002B4E518A99A9900495B3D /* RECommonFunctions.m in Sources */,
@@ -864,7 +861,6 @@
 				39DE1B492935E67F0001E926 /* GNLogManager.m in Sources */,
 				20912D732380DB7600506807 /* GNFileWriterSharer.m in Sources */,
 				2092E238205C3E83005E8B71 /* GNConfigPreferences.m in Sources */,
-				391C84AE2F2475D1006B25BA /* WebViewViewportManager.swift in Sources */,
 				2002B4A818A9991300495B3D /* main.m in Sources */,
 				2002B4E718A99A9900495B3D /* REFrostedViewController.m in Sources */,
 				2018EE951907671A00EC4311 /* LEANUrlInspector.m in Sources */,
@@ -1064,7 +1060,7 @@
 		};
 		2002B4CE18A9991300495B3D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AC6FABD83EE396EE94BF6614 /* Pods-Zillow.debug.xcconfig */;
+			baseConfigurationReference = 6DFFE53B32930FC50D5E3856 /* Pods-Zillow.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -1072,8 +1068,8 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
-				DEVELOPMENT_TEAM = ZHN2P52NGG;
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = 8HD495N2CV;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					.,
@@ -1082,18 +1078,18 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LeanIOS/MedianIOS-Prefix.pch";
 				INFOPLIST_FILE = "LeanIOS/MedianIOS-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.0;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.audrinc.zillow;
+				PRODUCT_BUNDLE_IDENTIFIER = org.que4.zillow;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1108,7 +1104,7 @@
 		};
 		2002B4CF18A9991300495B3D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 775032973D230A624AF99D7B /* Pods-Zillow.release.xcconfig */;
+			baseConfigurationReference = 1C87D0EC71506DE657506B9C /* Pods-Zillow.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -1116,8 +1112,8 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
-				DEVELOPMENT_TEAM = ZHN2P52NGG;
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = 8HD495N2CV;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					.,
@@ -1126,18 +1122,18 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LeanIOS/MedianIOS-Prefix.pch";
 				INFOPLIST_FILE = "LeanIOS/MedianIOS-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.0;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.audrinc.zillow;
+				PRODUCT_BUNDLE_IDENTIFIER = org.que4.zillow;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";

@@ -46,7 +46,6 @@ static NSString *kLEANWebViewControllerClearPools = @"co.median.ios.WebViewContr
 - (void) refreshPage;
 - (void) searchPressed:(id)sender;
 - (void) setSharePopOverRect:(CGRect)rect;
-- (void) handleDeeplinkUrl:(NSURL *)url;
 - (void) handleJSBridgeFunctions:(id)data;
 - (void) handleJsNavigationUrl:(NSString *)url;
 - (BOOL) handleNewWindowRequest:(NSURLRequest *)request initialWebview:(WKWebView *)initialWebview;
